@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: "Teste"
+  description: "Teste"
+  version: "20250331204124"
+servers:
+  - url: http://localhost:8080/kbplaygroundJavaPostgreSQL/api/Teste
+paths:
+  /api/Teste/gxobject:
+    post:
+      tags:
+        - api
+      operationId: "Uploadapi.Teste"
+      summary: "Upload a binary for Teste"
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal Server Error"
+
+  /Upload:
+    post:
+      tags:
+        - api  
+      operationId: "api.Teste.Upload"
+      summary: "Upload"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadInput"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeneXus.Common.Messages_Message"  
+
+        404:
+          description: "Not found"
+
+components:
+  schemas:
+    UploadInput:  
+      properties:
+        ImagemName:
+          type: "string"
+        ImagemBlob:
+          type: "string"
+  
+    GeneXus.Common.Messages_Message:
+      properties:
+        Id:
+          description: "Id"
+          type: "string"
+        Type:
+          description: "Type"
+          type: "integer"
+          format: "int32"
+        Description:
+          description: "Description"
+          type: "string"
+
+
+
+ 

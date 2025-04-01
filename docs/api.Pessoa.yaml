@@ -1,0 +1,301 @@
+openapi: 3.0.0
+info:
+  title: "Pessoa"
+  description: "Pessoa"
+  version: "20250331204124"
+servers:
+  - url: http://localhost:8080/kbplaygroundJavaPostgreSQL/api/pessoa
+paths:
+  /api/Pessoa/gxobject:
+    post:
+      tags:
+        - api
+      operationId: "Uploadapi.Pessoa"
+      summary: "Upload a binary for Pessoa"
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal Server Error"
+
+  /:
+    get:
+      tags:
+        - api  
+      operationId: "api.Pessoa.PessoaListAll"
+      summary: "Método para pegar todos as pessoas cadastrados."
+      parameters:
+        - name: "Pagina"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "Quantidade"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PessoaListAllOutput"
+        404:
+          description: "Not found"
+
+
+    post:
+      tags:
+        - api  
+      operationId: "api.Pessoa.PessoaInsert"
+      summary: "Método para cadastar uma nova pessoa no sistema"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PessoaInsertInput"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PessoaInsertOutput"
+        404:
+          description: "Not found"
+
+  /get-by-id/{pesid}:
+    get:
+      tags:
+        - api  
+      operationId: "api.Pessoa.PessoaListGetBId"
+      summary: "Método para pegar todos as pessoas cadastrados."
+      parameters:
+        - name: "pesid"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "Pagina"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "Quantidade"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PessoaListGetBIdOutput"
+        404:
+          description: "Not found"
+
+  /getfoto/{pesid}:
+    get:
+      tags:
+        - api  
+      operationId: "api.Pessoa.GetFoto"
+      summary: "Método para pegar todos as pessoas cadastrados."
+      parameters:
+        - name: "pesid"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetFotoOutput"
+        404:
+          description: "Not found"
+
+components:
+  schemas:
+    PessoaListAllOutput:
+      properties:
+        read_pessoa_dto:
+          description: "read_pessoa_dto"
+          type: array
+          items:
+            $ref: "#/components/schemas/api.read_pessoa_dto"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+    PessoaInsertOutput:
+      properties:
+        pes_id:
+          type: "integer"
+          format: "int64"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+    PessoaListGetBIdOutput:
+      properties:
+        read_pessoa_dto:
+          description: "read_pessoa_dto"
+          type: array
+          items:
+            $ref: "#/components/schemas/api.read_pessoa_dto"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+    GetFotoOutput:
+      properties:
+        LinTemporario:
+          type: "string"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+    PessoaInsertInput:  
+      properties:
+        dto_pessoa_create:
+          description: "insert_pessoa_dto"
+          $ref: "#/components/schemas/api.insert_pessoa_dto"
+        fp_blob:
+          type: "string"
+
+
+  
+    api.read_pessoa_dto:
+      properties:
+        pes_nome:
+          description: "pes_nome"
+          type: "string"
+        pes_data_nascimento:
+          description: "pes_data_nascimento"
+          type: "string"
+          format: "date"
+        pes_sexo:
+          description: "pes_sexo"
+          type: "string"
+        pes_mae:
+          description: "pes_mae"
+          type: "string"
+        pes_pai:
+          description: "pes_pai"
+          type: "string"
+        end_tipo_logradouro:
+          description: "end_tipo_logradouro"
+          type: "string"
+        end_logradouro:
+          description: "end_logradouro"
+          type: "string"
+        end_numero:
+          description: "end_numero"
+          type: "integer"
+          format: "int64"
+        end_bairro:
+          description: "end_bairro"
+          type: "string"
+        cid_nome:
+          description: "cid_nome"
+          type: "string"
+        cid_uf:
+          description: "cid_uf"
+          type: "string"
+
+
+
+    GeneXus.Common.Messages_Message:
+      properties:
+        Id:
+          description: "Id"
+          type: "string"
+        Type:
+          description: "Type"
+          type: "integer"
+          format: "int32"
+        Description:
+          description: "Description"
+          type: "string"
+
+
+
+    api.insert_pessoa_dto:
+      properties:
+        pes_nome:
+          description: "pes_nome"
+          type: "string"
+        pes_data_nascimento:
+          description: "pes_data_nascimento"
+          type: "string"
+          format: "date"
+        pes_sexo:
+          description: "pes_sexo"
+          type: "string"
+        pes_mae:
+          description: "pes_mae"
+          type: "string"
+        pes_pai:
+          description: "pes_pai"
+          type: "string"
+
+        endereco:
+          type: array
+          items:
+            description: enderecoItem
+            $ref: "#/components/schemas/api.insert_pessoa_dto.endereco_enderecoItem"
+
+
+    api.insert_pessoa_dto.endereco_enderecoItem:
+      properties:
+        end_tipo_logradouro:
+          description: "end_tipo_logradouro"
+          type: "string"
+        end_logradouro:
+          description: "end_logradouro"
+          type: "string"
+        end_numero:
+          description: "end_numero"
+          type: "integer"
+          format: "int64"
+        end_bairro:
+          description: "end_bairro"
+          type: "string"
+        cid_nome:
+          description: "cid_nome"
+          type: "string"
+        cid_uf:
+          description: "cid_uf"
+          type: "string"
+
+
+      x-gx-level: "insert_pessoa_dto"
+
+ 

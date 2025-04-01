@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: "Cidade"
+  description: "Cidade"
+  version: "20250331204124"
+servers:
+  - url: http://localhost:8080/kbplaygroundJavaPostgreSQL/api/Cidade
+paths:
+  /:
+    get:
+      tags:
+        - api  
+      operationId: "api.Cidade.CidadeListAll"
+      summary: "Método para pegar todos os registros paginados."
+      parameters:
+        - name: "nome"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            
+        - name: "uf"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            
+        - name: "Pagina"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "Count"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CidadeListAllOutput"
+        404:
+          description: "Not found"
+
+
+    post:
+      tags:
+        - api  
+      operationId: "api.Cidade.CidadeInsert"
+      summary: "Método para cadastar um novo registro"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CidadeInsertInput"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CidadeInsertOutput"
+        404:
+          description: "Not found"
+
+  /{cid_id}:
+    get:
+      tags:
+        - api  
+      operationId: "api.Cidade.CidadeGetById"
+      summary: "Método para pegar o registro pelo id."
+      parameters:
+        - name: "cid_id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CidadeGetByIdOutput"
+        404:
+          description: "Not found"
+
+
+    delete:
+      tags:
+        - api  
+      operationId: "api.Cidade.CidadeRemove"
+      summary: "Método para deletar"
+      parameters:
+        - name: "cid_id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeneXus.Common.Messages_Message"  
+
+        404:
+          description: "Not found"
+
+    put:
+      tags:
+        - api  
+      operationId: "api.Cidade.CidadeUpdate"
+      summary: "Método para atualizar"
+      parameters:
+        - name: "cid_id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CidadeUpdateInput"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeneXus.Common.Messages_Message"  
+
+        404:
+          description: "Not found"
+
+components:
+  schemas:
+    CidadeListAllOutput:
+      properties:
+        response_cidade_dto:
+          description: "response_cidade_dto"
+          type: array
+          items:
+            $ref: "#/components/schemas/api.response_cidade_dto"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+    CidadeInsertOutput:
+      properties:
+        cid_id:
+          type: "integer"
+          format: "int64"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+    CidadeGetByIdOutput:
+      properties:
+        response_cidade_dto:
+          description: "response_cidade_dto"
+          type: array
+          items:
+            $ref: "#/components/schemas/api.response_cidade_dto"
+        Messages:
+          description: "Messages"
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneXus.Common.Messages_Message"
+
+
+
+    CidadeInsertInput:  
+      properties:
+        insert_cidade_dto:
+          description: "insert_cidade_dto"
+          $ref: "#/components/schemas/api.insert_cidade_dto"
+
+
+
+    CidadeUpdateInput:  
+      properties:
+        update_cidade_dto:
+          description: "update_cidade_dto"
+          $ref: "#/components/schemas/api.update_cidade_dto"
+  
+    api.response_cidade_dto:
+      properties:
+        cid_id:
+          description: "cid_id"
+          type: "integer"
+          format: "int64"
+        cid_nome:
+          description: "cid_nome"
+          type: "string"
+        cid_uf:
+          description: "cid_uf"
+          type: "string"
+
+
+
+    GeneXus.Common.Messages_Message:
+      properties:
+        Id:
+          description: "Id"
+          type: "string"
+        Type:
+          description: "Type"
+          type: "integer"
+          format: "int32"
+        Description:
+          description: "Description"
+          type: "string"
+
+
+
+    api.insert_cidade_dto:
+      properties:
+        cid_nome:
+          description: "cid_nome"
+          type: "string"
+        cid_uf:
+          description: "cid_uf"
+          type: "string"
+
+
+
+    api.update_cidade_dto:
+      properties:
+        cid_nome:
+          description: "cid_nome"
+          type: "string"
+        cid_uf:
+          description: "cid_uf"
+          type: "string"
+
+
+
+ 

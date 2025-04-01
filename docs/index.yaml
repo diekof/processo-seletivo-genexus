@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Minha API Unificada
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /auth:
+    $ref: './api.Auth.yaml'
+  /cidade:
+    $ref: './api.Cidade.yaml'
+  /pessoa:
+    $ref: './api.Pessoa.yaml'
+  /servidor-efetivo:
+    $ref: './api.ServidorEfetivo.yaml'
+  /teste:
+    $ref: './api.Teste.yaml'

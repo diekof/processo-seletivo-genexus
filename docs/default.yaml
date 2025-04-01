@@ -1,0 +1,745 @@
+openapi: 3.0.0
+info:
+  title: Minha API Unificada
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /auth:
+    openapi: 3.0.0
+    info:
+      title: Auth
+      description: Authenticação
+      version: '20250331204124'
+    servers:
+      - url: 'http://localhost:8080/kbplaygroundJavaPostgreSQL/api/auth'
+    paths:
+      /login:
+        post:
+          tags:
+            - api
+          operationId: api.Auth.Login
+          summary: Método gerar o token jwt
+          requestBody:
+            required: false
+            content:
+              application/json:
+                schema:
+                  $ref: '#/paths/~1auth/components/schemas/LoginInput'
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1auth/components/schemas/LoginOutput'
+            '404':
+              description: Not found
+    components:
+      schemas:
+        LoginOutput:
+          properties:
+            Token:
+              type: string
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1auth/components/schemas/GeneXus.Common.Messages_Message'
+        LoginInput:
+          properties:
+            Login:
+              type: string
+            Password:
+              type: string
+        GeneXus.Common.Messages_Message:
+          properties:
+            Id:
+              description: Id
+              type: string
+            Type:
+              description: Type
+              type: integer
+              format: int32
+            Description:
+              description: Description
+              type: string
+  /cidade:
+    openapi: 3.0.0
+    info:
+      title: Cidade
+      description: Cidade
+      version: '20250331204124'
+    servers:
+      - url: 'http://localhost:8080/kbplaygroundJavaPostgreSQL/api/Cidade'
+    paths:
+      /:
+        get:
+          tags:
+            - api
+          operationId: api.Cidade.CidadeListAll
+          summary: Método para pegar todos os registros paginados.
+          parameters:
+            - name: nome
+              in: query
+              required: false
+              schema:
+                type: string
+            - name: uf
+              in: query
+              required: false
+              schema:
+                type: string
+            - name: Pagina
+              in: query
+              required: false
+              schema:
+                type: integer
+                format: int32
+            - name: Count
+              in: query
+              required: false
+              schema:
+                type: integer
+                format: int32
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1cidade/components/schemas/CidadeListAllOutput'
+            '404':
+              description: Not found
+        post:
+          tags:
+            - api
+          operationId: api.Cidade.CidadeInsert
+          summary: Método para cadastar um novo registro
+          requestBody:
+            required: false
+            content:
+              application/json:
+                schema:
+                  $ref: '#/paths/~1cidade/components/schemas/CidadeInsertInput'
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1cidade/components/schemas/CidadeInsertOutput'
+            '404':
+              description: Not found
+      '/{cid_id}':
+        get:
+          tags:
+            - api
+          operationId: api.Cidade.CidadeGetById
+          summary: Método para pegar o registro pelo id.
+          parameters:
+            - name: cid_id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1cidade/components/schemas/CidadeGetByIdOutput'
+            '404':
+              description: Not found
+        delete:
+          tags:
+            - api
+          operationId: api.Cidade.CidadeRemove
+          summary: Método para deletar
+          parameters:
+            - name: cid_id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1cidade/components/schemas/GeneXus.Common.Messages_Message'
+            '404':
+              description: Not found
+        put:
+          tags:
+            - api
+          operationId: api.Cidade.CidadeUpdate
+          summary: Método para atualizar
+          parameters:
+            - name: cid_id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          requestBody:
+            required: false
+            content:
+              application/json:
+                schema:
+                  $ref: '#/paths/~1cidade/components/schemas/CidadeUpdateInput'
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1cidade/components/schemas/GeneXus.Common.Messages_Message'
+            '404':
+              description: Not found
+    components:
+      schemas:
+        CidadeListAllOutput:
+          properties:
+            response_cidade_dto:
+              description: response_cidade_dto
+              type: array
+              items:
+                $ref: '#/paths/~1cidade/components/schemas/api.response_cidade_dto'
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1cidade/components/schemas/GeneXus.Common.Messages_Message'
+        CidadeInsertOutput:
+          properties:
+            cid_id:
+              type: integer
+              format: int64
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1cidade/components/schemas/GeneXus.Common.Messages_Message'
+        CidadeGetByIdOutput:
+          properties:
+            response_cidade_dto:
+              description: response_cidade_dto
+              type: array
+              items:
+                $ref: '#/paths/~1cidade/components/schemas/api.response_cidade_dto'
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1cidade/components/schemas/GeneXus.Common.Messages_Message'
+        CidadeInsertInput:
+          properties:
+            insert_cidade_dto:
+              description: insert_cidade_dto
+              $ref: '#/paths/~1cidade/components/schemas/api.insert_cidade_dto'
+        CidadeUpdateInput:
+          properties:
+            update_cidade_dto:
+              description: update_cidade_dto
+              $ref: '#/paths/~1cidade/components/schemas/api.update_cidade_dto'
+        api.response_cidade_dto:
+          properties:
+            cid_id:
+              description: cid_id
+              type: integer
+              format: int64
+            cid_nome:
+              description: cid_nome
+              type: string
+            cid_uf:
+              description: cid_uf
+              type: string
+        GeneXus.Common.Messages_Message:
+          properties:
+            Id:
+              description: Id
+              type: string
+            Type:
+              description: Type
+              type: integer
+              format: int32
+            Description:
+              description: Description
+              type: string
+        api.insert_cidade_dto:
+          properties:
+            cid_nome:
+              description: cid_nome
+              type: string
+            cid_uf:
+              description: cid_uf
+              type: string
+        api.update_cidade_dto:
+          properties:
+            cid_nome:
+              description: cid_nome
+              type: string
+            cid_uf:
+              description: cid_uf
+              type: string
+  /pessoa:
+    openapi: 3.0.0
+    info:
+      title: Pessoa
+      description: Pessoa
+      version: '20250331204124'
+    servers:
+      - url: 'http://localhost:8080/kbplaygroundJavaPostgreSQL/api/pessoa'
+    paths:
+      /api/Pessoa/gxobject:
+        post:
+          tags:
+            - api
+          operationId: Uploadapi.Pessoa
+          summary: Upload a binary for Pessoa
+          responses:
+            '200':
+              description: Successful operation
+            '400':
+              description: Bad request
+            '500':
+              description: Internal Server Error
+      /:
+        get:
+          tags:
+            - api
+          operationId: api.Pessoa.PessoaListAll
+          summary: Método para pegar todos as pessoas cadastrados.
+          parameters:
+            - name: Pagina
+              in: query
+              required: false
+              schema:
+                type: integer
+                format: int32
+            - name: Quantidade
+              in: query
+              required: false
+              schema:
+                type: integer
+                format: int32
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1pessoa/components/schemas/PessoaListAllOutput'
+            '404':
+              description: Not found
+        post:
+          tags:
+            - api
+          operationId: api.Pessoa.PessoaInsert
+          summary: Método para cadastar uma nova pessoa no sistema
+          requestBody:
+            required: false
+            content:
+              application/json:
+                schema:
+                  $ref: '#/paths/~1pessoa/components/schemas/PessoaInsertInput'
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1pessoa/components/schemas/PessoaInsertOutput'
+            '404':
+              description: Not found
+      '/get-by-id/{pesid}':
+        get:
+          tags:
+            - api
+          operationId: api.Pessoa.PessoaListGetBId
+          summary: Método para pegar todos as pessoas cadastrados.
+          parameters:
+            - name: pesid
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+            - name: Pagina
+              in: query
+              required: false
+              schema:
+                type: integer
+                format: int32
+            - name: Quantidade
+              in: query
+              required: false
+              schema:
+                type: integer
+                format: int32
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1pessoa/components/schemas/PessoaListGetBIdOutput'
+            '404':
+              description: Not found
+      '/getfoto/{pesid}':
+        get:
+          tags:
+            - api
+          operationId: api.Pessoa.GetFoto
+          summary: Método para pegar todos as pessoas cadastrados.
+          parameters:
+            - name: pesid
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/paths/~1pessoa/components/schemas/GetFotoOutput'
+            '404':
+              description: Not found
+    components:
+      schemas:
+        PessoaListAllOutput:
+          properties:
+            read_pessoa_dto:
+              description: read_pessoa_dto
+              type: array
+              items:
+                $ref: '#/paths/~1pessoa/components/schemas/api.read_pessoa_dto'
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1pessoa/components/schemas/GeneXus.Common.Messages_Message'
+        PessoaInsertOutput:
+          properties:
+            pes_id:
+              type: integer
+              format: int64
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1pessoa/components/schemas/GeneXus.Common.Messages_Message'
+        PessoaListGetBIdOutput:
+          properties:
+            read_pessoa_dto:
+              description: read_pessoa_dto
+              type: array
+              items:
+                $ref: '#/paths/~1pessoa/components/schemas/api.read_pessoa_dto'
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1pessoa/components/schemas/GeneXus.Common.Messages_Message'
+        GetFotoOutput:
+          properties:
+            LinTemporario:
+              type: string
+            Messages:
+              description: Messages
+              type: array
+              items:
+                $ref: '#/paths/~1pessoa/components/schemas/GeneXus.Common.Messages_Message'
+        PessoaInsertInput:
+          properties:
+            dto_pessoa_create:
+              description: insert_pessoa_dto
+              $ref: '#/paths/~1pessoa/components/schemas/api.insert_pessoa_dto'
+            fp_blob:
+              type: string
+        api.read_pessoa_dto:
+          properties:
+            pes_nome:
+              description: pes_nome
+              type: string
+            pes_data_nascimento:
+              description: pes_data_nascimento
+              type: string
+              format: date
+            pes_sexo:
+              description: pes_sexo
+              type: string
+            pes_mae:
+              description: pes_mae
+              type: string
+            pes_pai:
+              description: pes_pai
+              type: string
+            end_tipo_logradouro:
+              description: end_tipo_logradouro
+              type: string
+            end_logradouro:
+              description: end_logradouro
+              type: string
+            end_numero:
+              description: end_numero
+              type: integer
+              format: int64
+            end_bairro:
+              description: end_bairro
+              type: string
+            cid_nome:
+              description: cid_nome
+              type: string
+            cid_uf:
+              description: cid_uf
+              type: string
+        GeneXus.Common.Messages_Message:
+          properties:
+            Id:
+              description: Id
+              type: string
+            Type:
+              description: Type
+              type: integer
+              format: int32
+            Description:
+              description: Description
+              type: string
+        api.insert_pessoa_dto:
+          properties:
+            pes_nome:
+              description: pes_nome
+              type: string
+            pes_data_nascimento:
+              description: pes_data_nascimento
+              type: string
+              format: date
+            pes_sexo:
+              description: pes_sexo
+              type: string
+            pes_mae:
+              description: pes_mae
+              type: string
+            pes_pai:
+              description: pes_pai
+              type: string
+            endereco:
+              type: array
+              items:
+                description: enderecoItem
+                $ref: '#/paths/~1pessoa/components/schemas/api.insert_pessoa_dto.endereco_enderecoItem'
+        api.insert_pessoa_dto.endereco_enderecoItem:
+          properties:
+            end_tipo_logradouro:
+              description: end_tipo_logradouro
+              type: string
+            end_logradouro:
+              description: end_logradouro
+              type: string
+            end_numero:
+              description: end_numero
+              type: integer
+              format: int64
+            end_bairro:
+              description: end_bairro
+              type: string
+            cid_nome:
+              description: cid_nome
+              type: string
+            cid_uf:
+              description: cid_uf
+              type: string
+          x-gx-level: insert_pessoa_dto
+  /servidor-efetivo:
+    openapi: 3.0.0
+    info:
+      title: ServidorEfetivo
+      description: Servidor Efetivo
+      version: '20250331204124'
+    servers:
+      - url: 'http://localhost:8080/kbplaygroundJavaPostgreSQL/api/ServidorEfetivo'
+    paths:
+      /api/ServidorEfetivo/gxobject:
+        post:
+          tags:
+            - api
+          operationId: Uploadapi.ServidorEfetivo
+          summary: Upload a binary for ServidorEfetivo
+          responses:
+            '200':
+              description: Successful operation
+            '400':
+              description: Bad request
+            '500':
+              description: Internal Server Error
+      /:
+        post:
+          tags:
+            - api
+          operationId: api.ServidorEfetivo.ServidorEfetivoInsert
+          summary: Método para cadastar uma nova pessoa no sistema
+          requestBody:
+            required: false
+            content:
+              application/json:
+                schema:
+                  $ref: '#/paths/~1servidor-efetivo/components/schemas/ServidorEfetivoInsertInput'
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1servidor-efetivo/components/schemas/GeneXus.Common.Messages_Message'
+            '404':
+              description: Not found
+    components:
+      schemas:
+        ServidorEfetivoInsertInput:
+          properties:
+            insert_servidor_efetivo:
+              description: insert_servidor_efetivo
+              $ref: '#/paths/~1servidor-efetivo/components/schemas/api.insert_servidor_efetivo'
+        api.insert_servidor_efetivo:
+          properties:
+            pes_nome:
+              description: pes_nome
+              type: string
+            pes_data_nascimento:
+              description: pes_data_nascimento
+              type: string
+              format: date
+            pes_sexo:
+              description: pes_sexo
+              type: string
+            pes_mae:
+              description: pes_mae
+              type: string
+            pes_pai:
+              description: pes_pai
+              type: string
+            se_matricula:
+              description: se_matricula
+              type: string
+            foto:
+              description: foto
+              type: string
+            endereco:
+              type: array
+              items:
+                description: enderecoItem
+                $ref: '#/paths/~1servidor-efetivo/components/schemas/api.insert_servidor_efetivo.endereco_enderecoItem'
+        api.insert_servidor_efetivo.endereco_enderecoItem:
+          properties:
+            end_tipo_logradouro:
+              description: end_tipo_logradouro
+              type: string
+            end_logradouro:
+              description: end_logradouro
+              type: string
+            end_numero:
+              description: end_numero
+              type: integer
+              format: int64
+            end_bairro:
+              description: end_bairro
+              type: string
+            cid_nome:
+              description: cid_nome
+              type: string
+            cid_uf:
+              description: cid_uf
+              type: string
+          x-gx-level: insert_servidor_efetivo
+        GeneXus.Common.Messages_Message:
+          properties:
+            Id:
+              description: Id
+              type: string
+            Type:
+              description: Type
+              type: integer
+              format: int32
+            Description:
+              description: Description
+              type: string
+  /teste:
+    openapi: 3.0.0
+    info:
+      title: Teste
+      description: Teste
+      version: '20250331204124'
+    servers:
+      - url: 'http://localhost:8080/kbplaygroundJavaPostgreSQL/api/Teste'
+    paths:
+      /api/Teste/gxobject:
+        post:
+          tags:
+            - api
+          operationId: Uploadapi.Teste
+          summary: Upload a binary for Teste
+          responses:
+            '200':
+              description: Successful operation
+            '400':
+              description: Bad request
+            '500':
+              description: Internal Server Error
+      /Upload:
+        post:
+          tags:
+            - api
+          operationId: api.Teste.Upload
+          summary: Upload
+          requestBody:
+            required: false
+            content:
+              application/json:
+                schema:
+                  $ref: '#/paths/~1teste/components/schemas/UploadInput'
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1teste/components/schemas/GeneXus.Common.Messages_Message'
+            '404':
+              description: Not found
+    components:
+      schemas:
+        UploadInput:
+          properties:
+            ImagemName:
+              type: string
+            ImagemBlob:
+              type: string
+        GeneXus.Common.Messages_Message:
+          properties:
+            Id:
+              description: Id
+              type: string
+            Type:
+              description: Type
+              type: integer
+              format: int32
+            Description:
+              description: Description
+              type: string
