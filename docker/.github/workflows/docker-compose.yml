@@ -1,0 +1,47 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docker-compose:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:20.10.16
+        options: --privileged
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+
+      - name: Build and start containers
+        run: |
+          docker-compose -f docker-compose.yml up -d --build
+
+      - name: Wait for services to be healthy
+        run: |
+          docker-compose ps
+          sleep 60
+          docker inspect --format='{{json .State.Health}}' $(docker-compose ps -q postgres)
+
+      # Aqui você pode adicionar seus testes, por exemplo uma requisição HTTP para a API:
+      - name: Test API health
+        run: |
+          curl --fail http://localhost:8081/ || exit 1
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose down -v
