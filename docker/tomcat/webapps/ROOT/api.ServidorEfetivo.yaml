@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: "ServidorEfetivo"
+  description: "Servidor Efetivo"
+  version: "20250331204124"
+servers:
+  - url: http://localhost:8080/api/ServidorEfetivo
+paths:
+  /api/ServidorEfetivo/gxobject:
+    post:
+      tags:
+        - api
+      operationId: "Uploadapi.ServidorEfetivo"
+      summary: "Upload a binary for ServidorEfetivo"
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal Server Error"
+
+  /:
+    post:
+      tags:
+        - api  
+      operationId: "api.ServidorEfetivo.ServidorEfetivoInsert"
+      summary: "Método para cadastar uma nova pessoa no sistema"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServidorEfetivoInsertInput"
+      
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeneXus.Common.Messages_Message"  
+
+        404:
+          description: "Not found"
+
+components:
+  schemas:
+    ServidorEfetivoInsertInput:  
+      properties:
+        insert_servidor_efetivo:
+          description: "insert_servidor_efetivo"
+          $ref: "#/components/schemas/api.insert_servidor_efetivo"
+  
+    api.insert_servidor_efetivo:
+      properties:
+        pes_nome:
+          description: "pes_nome"
+          type: "string"
+        pes_data_nascimento:
+          description: "pes_data_nascimento"
+          type: "string"
+          format: "date"
+        pes_sexo:
+          description: "pes_sexo"
+          type: "string"
+        pes_mae:
+          description: "pes_mae"
+          type: "string"
+        pes_pai:
+          description: "pes_pai"
+          type: "string"
+        se_matricula:
+          description: "se_matricula"
+          type: "string"
+        foto:
+          description: "foto"
+          type: "string"
+
+        endereco:
+          type: array
+          items:
+            description: enderecoItem
+            $ref: "#/components/schemas/api.insert_servidor_efetivo.endereco_enderecoItem"
+
+
+    api.insert_servidor_efetivo.endereco_enderecoItem:
+      properties:
+        end_tipo_logradouro:
+          description: "end_tipo_logradouro"
+          type: "string"
+        end_logradouro:
+          description: "end_logradouro"
+          type: "string"
+        end_numero:
+          description: "end_numero"
+          type: "integer"
+          format: "int64"
+        end_bairro:
+          description: "end_bairro"
+          type: "string"
+        cid_nome:
+          description: "cid_nome"
+          type: "string"
+        cid_uf:
+          description: "cid_uf"
+          type: "string"
+
+
+      x-gx-level: "insert_servidor_efetivo"
+
+    GeneXus.Common.Messages_Message:
+      properties:
+        Id:
+          description: "Id"
+          type: "string"
+        Type:
+          description: "Type"
+          type: "integer"
+          format: "int32"
+        Description:
+          description: "Description"
+          type: "string"
+
+
+
+ 

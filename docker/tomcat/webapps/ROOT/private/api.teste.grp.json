@@ -1,0 +1,27 @@
+{
+"ObjectType":"ServiceGroup",
+"Name":"api\\Teste",
+"BasePath":"api/Teste",
+"Mappings":
+[
+{
+"Verb":"POST",
+"Name":"upload",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_upload",
+"Implementation":"api\\UploadImage",
+"PathRegexp":"upload",
+"Path":"upload"
+
+},
+{
+"Name":"gxobject",
+"Verb":"POST",
+"Bodystyle":"Wrapped",
+"ServiceMethod":"gxobject",
+"VariableAlias": [],
+"Implementation":"gxobject",
+"PathRegexp":"gxobject",
+"Path":"gxobject"
+}]}

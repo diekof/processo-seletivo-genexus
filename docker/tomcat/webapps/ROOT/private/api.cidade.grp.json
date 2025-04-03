@@ -1,0 +1,56 @@
+{
+"ObjectType":"ServiceGroup",
+"Name":"api\\Cidade",
+"BasePath":"api/Cidade",
+"Mappings":
+[
+{
+"Verb":"GET",
+"PathRegexp":"",
+"Path":"",
+"Name":"cidadelistall",
+"Bodystyle":"Wrapped",
+"VariableAlias": [{"Key":"nome","Value":"Cid_nome"},{"Key":"uf","Value":"Cid_uf"}],
+"ServiceMethod":"gxep_cidadelistall",
+"Implementation":"api\\read_cidade_use_case"
+},
+{
+"Verb":"GET",
+"PathRegexp":"([^/]+)",
+"Path":"{cid_id}",
+"Name":"cidadegetbyid",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_cidadegetbyid",
+"Implementation":"api\\read_cidade_use_case"
+},
+{
+"Verb":"POST",
+"PathRegexp":"",
+"Path":"",
+"Name":"cidadeinsert",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_cidadeinsert",
+"Implementation":"api\\create_cidade_use_case"
+},
+{
+"Verb":"PUT",
+"PathRegexp":"([^/]+)",
+"Path":"{cid_id}",
+"Name":"cidadeupdate",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_cidadeupdate",
+"Implementation":"api\\update_cidade_use_case"
+},
+{
+"Verb":"DELETE",
+"PathRegexp":"([^/]+)",
+"Path":"{cid_id}",
+"Name":"cidaderemove",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_cidaderemove",
+"Implementation":"api\\delete_cidade_use_case"
+}]}

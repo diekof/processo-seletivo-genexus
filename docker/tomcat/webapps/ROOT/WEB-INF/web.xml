@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app
+	xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+	version="6.0">
+
+	<display-name>GenexusWebApp</display-name>
+
+	<listener>
+		<listener-class>com.genexus.webpanels.ServletEventListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.genexus.webpanels.SessionEventListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>JerseyListener</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>jakarta.ws.rs.Application</param-name>
+			<param-value>com.kbplayground.GXApplication</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+			<param-value>com.sun.jersey.api.container.filter.GZIPContentEncodingFilter</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+			<param-value>com.sun.jersey.api.container.filter.GZIPContentEncodingFilter</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JerseyListener</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>gxcfg</param-name>
+		<param-value>com.kbplayground.GXcfg</param-value>
+	</context-param>
+	<filter>
+		<filter-name>APIObjectFilter</filter-name>
+		<filter-class>com.genexus.filters.APIObjectFilter</filter-class>
+		<init-param>
+			<param-name>BasePath</param-name>
+			<param-value>*</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>APIObjectFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>com.genexus.servlet.CorsFilter</filter-class>		
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/oauth/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter>
+		<filter-name>ExpiresFilter</filter-name>
+		<filter-class>com.genexus.filters.ExpiresFilter</filter-class>
+		<init-param>
+			<param-name>ExpiresByType image</param-name>
+			<param-value>access plus 36 hours</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ExpiresByType text/css</param-name>
+			<param-value>access plus 36 hours</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ExpiresByType application/javascript</param-name>
+			<param-value>access plus 36 hours</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ExpiresFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>InternalRestServicesFilter</filter-name>
+		<filter-class>com.genexus.filters.InternalRestServicesFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>InternalRestServicesFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+
+
+</web-app> 

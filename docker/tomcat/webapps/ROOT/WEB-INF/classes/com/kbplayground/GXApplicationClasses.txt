@@ -1,0 +1,5 @@
+com.kbplayground.api.auth_services_rest
+com.kbplayground.api.cidade_services_rest
+com.kbplayground.api.pessoa_services_rest
+com.kbplayground.api.servidorefetivo_services_rest
+com.kbplayground.api.teste_services_rest

@@ -1,0 +1,56 @@
+{
+"ObjectType":"ServiceGroup",
+"Name":"api\\Pessoa",
+"BasePath":"api/pessoa",
+"Mappings":
+[
+{
+"Verb":"GET",
+"PathRegexp":"",
+"Path":"",
+"Name":"pessoalistall",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_pessoalistall",
+"Implementation":"api\\read_pessoa_use_case"
+},
+{
+"Verb":"POST",
+"PathRegexp":"",
+"Path":"",
+"Name":"pessoainsert",
+"Bodystyle":"Wrapped",
+"VariableAlias": [{"Key":"pesid","Value":"Pes_id"}],
+"ServiceMethod":"gxep_pessoainsert",
+"Implementation":"api\\create_pessoa_use_case"
+},
+{
+"Verb":"GET",
+"PathRegexp":"get-by-id/([^/]+)",
+"Path":"get-by-id/{pes_id}",
+"Name":"pessoalistgetbid",
+"Bodystyle":"Wrapped",
+"VariableAlias": [{"Key":"pesid","Value":"Pes_id"}],
+"ServiceMethod":"gxep_pessoalistgetbid",
+"Implementation":"api\\read_pessoa_by_id_use_case"
+},
+{
+"Verb":"GET",
+"PathRegexp":"getfoto/([^/]+)",
+"Path":"getfoto/{pes_id}",
+"Name":"getfoto",
+"Bodystyle":"Wrapped",
+"VariableAlias": [{"Key":"pesid","Value":"Pes_id"}],
+"ServiceMethod":"gxep_getfoto",
+"Implementation":"api\\get_foto_by_pes_id_use_case"
+},
+{
+"Name":"gxobject",
+"Verb":"POST",
+"Bodystyle":"Wrapped",
+"ServiceMethod":"gxobject",
+"VariableAlias": [],
+"Implementation":"gxobject",
+"PathRegexp":"gxobject",
+"Path":"gxobject"
+}]}

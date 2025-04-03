@@ -1,0 +1,26 @@
+{
+"ObjectType":"ServiceGroup",
+"Name":"api\\ServidorEfetivo",
+"BasePath":"api/ServidorEfetivo",
+"Mappings":
+[
+{
+"Verb":"POST",
+"PathRegexp":"",
+"Path":"",
+"Name":"servidorefetivoinsert",
+"Bodystyle":"Wrapped",
+"VariableAlias": [],
+"ServiceMethod":"gxep_servidorefetivoinsert",
+"Implementation":"api\\create_servidor_efetivo_use_case"
+},
+{
+"Name":"gxobject",
+"Verb":"POST",
+"Bodystyle":"Wrapped",
+"ServiceMethod":"gxobject",
+"VariableAlias": [],
+"Implementation":"gxobject",
+"PathRegexp":"gxobject",
+"Path":"gxobject"
+}]}
